@@ -222,7 +222,7 @@ module.exports = function(grunt) {
                     cleanBowerDir: true
                 }
             }
-        }
+        },
 
         // FTP アップロード
         // ---------------------------------------------------
