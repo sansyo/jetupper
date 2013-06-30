@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+// コンポーネント｜メインコンテンツ
+// -------------------------------------------------------------------------------------------------------
+#main {
+    float: left;
+    padding: 0 0 40px;
+    width: $mainMaxWidth;
+
+    // スマートフォン表示
+    @include below($breakSmall) {
+        float: none;
+        padding: 0;
+        width: auto;
+    }
+}

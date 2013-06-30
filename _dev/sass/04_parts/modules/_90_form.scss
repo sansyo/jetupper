@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+// ========================================================================================
+// モジュールスタイル｜フォーム
+// ========================================================================================
+
+/* フォームパーツ
+------------------------------------------------------------ */
+ul.check-01 {
+    $baseColor : #ccc;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    @include box-sizing(border-box);
+    > li {
+        display: table-cell;
+        text-align: center;
+        > label {
+            display: block;
+            position: relative;
+            > span {
+                display: block;
+                padding: 10px 5px;
+                border-right: 1px solid #aaa;
+                background-color: $baseColor;
+                box-shadow: 0 1px 2px rgba(255,255,255,0.2) inset;
+                @include embossWhite;
+            }
+            > input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+                &:checked + span {
+                    background-color: #888;
+                    border-right-color: #676767;
+                    box-shadow: 0 -1px 2px rgba(0,0,0,0.2) inset;
+                    @include embossWhite($alpha: 0.4);
+                }
+            }
+        }
+        &:first-child {
+            span {
+                @include border-left-radius(4px);
+            }
+        }
+        &:last-child {
+            span {
+                @include border-right-radius(4px);
+                border-right-color: $baseColor;
+            }
+        }
+    }
+}
+
+
+// 中コメント
+// -------------------------------------------------------------------------------------------------------

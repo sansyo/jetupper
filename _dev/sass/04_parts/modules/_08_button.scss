@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+// モジュール｜ボタン
+// -------------------------------------------------------------------------------------------------------
+
+/* ボタン
+------------------------------------------------------------ */
+
+a.btn-01 {
+    @include display-box;
+    padding: 13px 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: $baseFontColor;
+    @include background(linear-gradient(#eee, #eee 50%, #e1e1e1 50%, #e1e1e1));
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+a.btn-02 {
+    @include display-box;
+    padding: 13px 30px;
+    border-radius: 8px;
+    color: #fff;
+    background-color: #333;
+    font-weight: bold;
+    text-align: center;
+}
+
+p[class*="btn-"] {
+    text-align: center;
+    a {
+        display: block !important;
+    }
+    &.btn-01 a { @extend a.btn-01; }
+    &.btn-02 a { @extend a.btn-02; }
+}
+
+ul[class*="btn-"] {
+    @include display-box;
+    > li {
+        @include display-box;
+        @include box-flex(1);
+        padding-right: 15px;
+        &:last-child {
+            padding-right: 0;
+        }
+        > a {
+            @include display-box;
+            @include box-align(center);
+            @include box-flex(1);
+            @include box-pack(center);
+        }
+    }
+    &.btn-01 a { @extend a.btn-01; }
+    &.btn-02 a { @extend a.btn-02; }
+}

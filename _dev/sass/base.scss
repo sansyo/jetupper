@@ -1,0 +1,121 @@
+@charset "UTF-8";
+
+// Mixin・関数・ブラウザハック
+// -------------------------------------------------------------------------------------------------------
+@import "01_extension/mixin";
+@import "01_extension/function";
+@import "01_extension/hack";
+@import "01_extension/bourbon/bourbon";
+
+
+// 各種設定
+// -------------------------------------------------------------------------------------------------------
+@import "02_settings/base";
+@import "02_settings/font";
+@import "02_settings/color";
+@import "02_settings/prefix";
+@import "02_settings/layout";
+
+
+// ベーススタイル
+// -------------------------------------------------------------------------------------------------------
+@import "03_core/reset";
+@import "03_core/normalize";
+@if $baseStyle == "reset" {
+    @include reset;
+} @else if $baseStyle == "normalize" {
+    @include normalize;
+}
+
+
+/* ページ
+------------------------------------------------------------ */
+body {
+    @if $baseStyle == "normalize" {
+        @extend %noMargin;
+        @extend %noPadding;
+    }
+    color: $baseFontColor;
+    font: normal #{$baseFontSize}/#{$baseLineHeight} $baseFontFamily;
+}
+
+
+// スタイルリセット（Normalize 向け）
+// -------------------------------------------------------------------------------------------------------
+@if $baseStyle == "normalize" {
+    h1, h2, h3, h4, h5, h6, p, dl, dt, dd, table {
+        @extend %noMargin;
+        @extend %noPadding;
+    }
+    ul, ol, li {
+        @extend %noMargin;
+        @extend %noPadding;
+        @extend %noListStyle;
+    }
+    img {
+        vertical-align: bottom;
+    }
+}
+
+
+// コンポーネントスタイル
+// -------------------------------------------------------------------------------------------------------
+/* ヘッダー
+------------------------------------------------------------ */
+@import "04_parts/components/header";
+
+/* グローバルナビゲーション
+------------------------------------------------------------ */
+@import "04_parts/components/globalNav";
+
+/* フッター
+------------------------------------------------------------ */
+@import "04_parts/components/footer";
+
+/* コンテンツ
+------------------------------------------------------------ */
+@import "04_parts/components/content";
+
+/* メインコンテンツ
+------------------------------------------------------------ */
+@import "04_parts/components/main";
+
+/* サブコンテンツ
+------------------------------------------------------------ */
+@import "04_parts/components/sub";
+
+
+// モジュールスタイル
+// -------------------------------------------------------------------------------------------------------
+// @import "04_parts/modules/01_section";
+@import "04_parts/modules/02_heading";
+@import "04_parts/modules/03_paragraph";
+@import "04_parts/modules/04_emphasis";
+@import "04_parts/modules/05_list";
+@import "04_parts/modules/06_notice";
+@import "04_parts/modules/07_link";
+@import "04_parts/modules/08_button";
+@import "04_parts/modules/09_navigation";
+@import "04_parts/modules/10_index";
+@import "04_parts/modules/11_grid";
+@import "04_parts/modules/12_image";
+@import "04_parts/modules/13_table";
+@import "04_parts/modules/14_box";
+@import "04_parts/modules/15_tabs";
+@import "04_parts/modules/80_modal-menu";
+@import "04_parts/modules/90_form";
+@import "04_parts/modules/99_adjust";
+
+
+/* フロート解除
+------------------------------------------------------------ */
+%clearfix {
+    @if $supportIe6 or $supportIe7 {
+        *zoom: 1;
+    }
+    &:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+}

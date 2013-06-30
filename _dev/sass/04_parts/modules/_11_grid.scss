@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+// モジュール｜グリッド
+// -------------------------------------------------------------------------------------------------------
+
+/* グリッド
+------------------------------------------------------------ */
+div.grid {
+    @extend %clearfix;
+    @extend %mt;
+    $fullWidth : $mainMaxWidth; // 全体の幅
+    $gutter : 20px; // カラム間の幅
+
+    > div.col {
+        float: left;
+        margin-right: $gutter;
+    }
+
+    // カラム数別スタイル
+    @for $i from 2 through 4 {
+        &.col#{$i} {
+            > div.col {
+                width: ( $fullWidth - $gutter * ($i - 1) ) / $i;
+                &:nth-child(#{$i}n+1) { clear: both; }
+                &:nth-child(#{$i}n+#{$i}) { margin-right: 0; }
+            }
+        }
+    }
+}
+
+
+/* レスポンシブグリッド
+------------------------------------------------------------ */
+@for $i from 2 through 4 {
+    div.colLayout.max#{$i} {
+        @extend %mt;
+        @include rwdCol($colNum: $i, $gutter: 20px);
+    }
+}

@@ -1,0 +1,230 @@
+@charset "UTF-8";
+
+// ========================================================================================
+// Mixin 定義
+// ========================================================================================
+
+// メディアクエリー（ブレークポイント別管理）
+// -------------------------------------------------------------------------------------------------------
+//    below は引数のブレークポイント以下、above は引数のブレークポイントより上のサイズへの
+//    メディアクエリー別スタイルが記述される
+//    引数には原則、_vars.scss で定義したブレークポイント用変数を指定する
+//
+//    使用例：
+//    div {
+//        @include below($breakMedium) {
+//            margin-bottom: 0;
+//        }
+//        @include inbetween($breakSmall, $breakMedium) {
+//            margin-bottom: 40px;
+//        }
+//    }
+// -------------------------------------------------------------------------------------------------------
+@mixin below($breakpoint) {
+    @media screen and (max-width: $breakpoint) {
+        @content;
+    }
+}
+@mixin above($breakpoint) {
+    @media screen and (min-width: $breakpoint + 1) {
+        @content;
+    }
+}
+@mixin inbetween($breakpointSmall, $breakpointLarge) {
+    @media screen and (min-width: $breakpointSmall + 1) and (max-width: $breakpointLarge) {
+        @content;
+    }
+}
+
+
+// アイコン生成
+// -------------------------------------------------------------------------------------------------------
+//    $pos:     ビュレット表示位置（left, right）
+//    $space:   親要素外辺からのビュレット位置（px）
+//    $width:   ビュレット幅（px）
+//    $imgPos:  背景画像位置（px）
+//    $imgPath: ビュレット画像パス（指定なしでデフォルト画像のパスを使用）
+//    $imgSize: ビュレット背景画像サイズ（指定なしでデフォルト画像を使用）
+// -------------------------------------------------------------------------------------------------------
+@mixin addIcon ($pos, $space, $width, $imgPos, $imgPath:$defIcon, $imgSize:$defIconSize) {
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        #{$pos}: $space;
+        z-index: 1;
+        display: block;
+        overflow: hidden;
+        width: $width / $devicePixelRatio;
+        height: 100%;
+        background: url($imgPath) no-repeat $imgPos/$devicePixelRatio*-1 50%;
+        @if $devicePixelRatio != 1 {
+            @include background-size($imgSize);
+        }
+    }
+}
+
+
+// 汎用矢印生成
+// -------------------------------------------------------------------------------------------------------
+//    $space:    親要素外辺からのビュレット位置（px）
+//    $bdrWidth: 矢印の線幅（px）
+//    $bdrColor: 矢印の前景色（hex）
+// -------------------------------------------------------------------------------------------------------
+@mixin addArrow($space, $bdrWidth, $bdrColor) {
+    position: relative;
+    &:after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: $space + $bdrWidth;
+        display: block;
+        margin-top: -($bdrWidth + $bdrWidth / 2);
+        border-right: $bdrWidth solid $bdrColor;
+        border-bottom: $bdrWidth solid $bdrColor;
+        width: $bdrWidth * 2;
+        height: $bdrWidth * 2;
+        @include rotate(-45deg);
+    }
+}
+
+
+// ビュレット生成
+// -------------------------------------------------------------------------------------------------------
+//    $top:     親要素上外辺からのビュレット位置（px）
+//    $left:    親要素左外辺からのビュレット位置（px）
+//    $width:   ビュレット幅（px）
+//    $height:  ビュレット高（px）
+//    $imgPos:  背景画像位置（px）
+//    $imgPath: ビュレット画像パス（指定なしでデフォルト画像のパスを使用）
+//    $imgSize: ビュレット背景画像サイズ（指定なしでデフォルト画像を使用）
+// -------------------------------------------------------------------------------------------------------
+@mixin addBullet ($top, $left, $width, $height, $imgPos, $imgPath:$defIcon, $imgSize:$defIconSize) {
+    position: relative;
+    &:before {
+        content: "";
+        position: absolute;
+        top: $top;
+        left: $left;
+        display: block;
+        overflow: hidden;
+        width: $width / $devicePixelRatio;
+        height: $height / $devicePixelRatio;
+        background: url($imgPath) no-repeat $imgPos/$devicePixelRatio*-1 50%;
+        @if $devicePixelRatio != 1 {
+            @include background-size($imgSize);
+        }
+    }
+}
+
+
+// レスポンシブカラム
+// -------------------------------------------------------------------------------------------------------
+//    $colNum:      カラム数
+//    $gutter:      カラム間の幅
+//    $elem:        並列カラムの要素名（デフォルトは div）
+//    $childClass:  並列カラムのクラス名（デフォルトは .col）
+//    $parentWidth: 親要素の幅（デフォルトではメインカラム幅変数を指定）
+//
+//    使用例：
+//    div.wrapper {
+//        @include rwdCol($colNum: 2, $gutter: 15px); <= 要素名、クラス名、親要素幅はデフォルトを使用
+//    }
+// -------------------------------------------------------------------------------------------------------
+@mixin rwdCol($colNum, $gutter, $elem: "div", $childClass: ".col", $parentWidth: $mainMaxWidth) {
+    $width: $parentWidth + $gutter;
+
+    // コンテナ
+    @extend %clearfix;
+    margin-left: -1 * percentage($gutter / $width);
+    @include below($breakSmall) {
+        margin-left: 0;
+    }
+
+    $colWidth: ($width - $colNum * $gutter) / $colNum;
+    > #{$elem}#{$childClass} {
+        display: block;
+        float: left;
+        @include box-sizing(border-box);
+        @include below($breakSmall) {
+            float: none;
+            width: auto;
+            margin-left: 0;
+        }
+        width: percentage($colWidth / $width);
+        margin-left: percentage($gutter / $width);
+
+        &:nth-child(#{$colNum}n+1) {
+            clear: both;
+        }
+    }
+}
+
+
+// 白エンボス
+// -------------------------------------------------------------------------------------------------------
+//    $hoff:  横方向（デフォルトで 1px）
+//    $voff:  縦報告（デフォルトで 1px）
+//    $blur:  ぼかし（デフォルトで 0px）
+//    $color: 影の色（デフォルトで #fff。16進数で指定可能）
+//    $alpha: 影のアルファ値（デフォルトで 0.7）
+//
+//    使用例：
+//    p.foo {
+//        @include embossWhite;  <= デフォルト値で指定
+//    }
+//    p.bar {
+//        @include embossWhite($color: #ddd, $alpha: 0.4);  <= 色とアルファ値を変更
+//    }
+// -------------------------------------------------------------------------------------------------------
+@mixin embossWhite($hoff: 1px, $voff: 1px, $blur: 0, $color: #fff, $alpha: 0.7) {
+    text-shadow: $hoff $voff $blur rgba($color, $alpha);
+}
+
+
+// 黒エンボス
+// -------------------------------------------------------------------------------------------------------
+//    $hoff:  横方向（デフォルトで -1px）
+//    $voff:  縦報告（デフォルトで -1px）
+//    $blur:  ぼかし（デフォルトで 0px）
+//    $color: 影の色（デフォルトで #000。16進数で指定可能）
+//    $alpha: 影のアルファ値（デフォルトで 0.5）
+//
+//    使用例：
+//    p.foo {
+//        @include embossBlack;  <= デフォルト値で指定
+//    }
+//    p.bar {
+//        @include embossBlack($color: #333, $alpha: 0.7);  <= 色とアルファ値を変更
+//    }
+// -------------------------------------------------------------------------------------------------------
+@mixin embossBlack($hoff: -1px, $voff: -1px, $blur: 0, $color: #000, $alpha: 0.5) {
+    text-shadow: $hoff $voff $blur rgba($color, $alpha);
+}
+
+
+// :last-child をフッククラスと併用
+// -------------------------------------------------------------------------------------------------------
+//    $selector:  該当セレクタを参照（変更不可）
+//    $extra:     擬似クラスを付与したい場合に記述
+//    $className: IE6/7/8 向けに追加するクラス名（デフォルトで .lastChild。変更可）
+//
+//    使用例：
+//    div {
+//        @include lastChild($extra: ":hover") {
+//            margin-bottom: 0;
+//        }
+//    }
+// -------------------------------------------------------------------------------------------------------
+$defaultLastChildClassName : ".lastChild";
+@mixin lastChild($selecor: "&", $extra: null, $className: $defaultLastChildClassName) {
+    #{$selecor}:last-child#{$extra} {
+        @content;
+    }
+    @if $supportIe6 or $supportIe7 or $supportIe8 {
+        #{$selecor}#{$className}#{$extra} {
+            @content;
+        }
+    }
+}

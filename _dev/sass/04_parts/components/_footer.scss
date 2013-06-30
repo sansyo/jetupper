@@ -1,0 +1,74 @@
+@charset "UTF-8";
+
+// コンポーネント｜フッター
+// -------------------------------------------------------------------------------------------------------
+#footerWrap {
+    background-color: #222;
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+#footer {
+    margin: 0 auto;
+    padding: 15px 0;
+    width: $pageMaxWidth;
+    nav {
+        line-height: 1.4;
+        font-family: $helvetica;
+        > ul {
+            @extend %clearfix;
+            > li {
+                width: $pageMaxWidth / 5;
+                float: left;
+                @include box-sizing(border-box);
+                padding-right: 15px;
+                > a {
+                    font-weight: bold;
+                }
+                > ul {
+                    margin: 8px 0 0;
+                    font-size: fz(12, $baseFontSize);
+                    padding: 0 0 0 1.8em;
+                    > li {
+                        margin:  0 0 10px;
+                    }
+                }
+            }
+        }
+    }
+    #copyright {
+        margin: 50px 0 0;
+        text-align: center;
+        font-family: $helvetica;
+    }
+
+    // スマートフォン表示
+    @include below($breakSmall) {
+        margin: 0;
+        padding: 0;
+        width: auto;
+        nav {
+            > ul {
+                > li {
+                    width: auto;
+                    float: none;
+                    padding: 0;
+                    border-bottom: 1px solid #fff;
+                    > a {
+                        display: block;
+                        padding: 12px 15px;
+                    }
+                    > ul {
+                        display: none;
+                    }
+                }
+            }
+        }
+        #copyright {
+            margin: 0;
+            padding: 15px 0 10px;
+        }
+    }
+}

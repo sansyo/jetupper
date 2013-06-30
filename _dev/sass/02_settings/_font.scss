@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+// Google Web Font "Open Sans" の利用
+// -------------------------------------------------------------------------------------------------------
+$useOpenSans: true; // Google Open Sans を使う場合は true
+$OpenSans: null;
+@if $useOpenSans {
+    @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+    $OpenSans: '"Open Sans", ';
+}
+
+
+// フォントファミリータイプ
+// -------------------------------------------------------------------------------------------------------
+$sansSerifJa:   #{$OpenSans}"\30e1\30a4\30ea\30aa", Meiryo, "\30d2\30e9\30ae\30ce\89d2\30b4 Pro W3", "Hiragino Kaku Gothic Pro", "\ff2d\ff33 \ff30\30b4\30b7\30c3\30af", sans-serif;
+$helvetica:     "Helvetica Neue", Helvetica, Arial, sans-serif;
+$georgia:       Georgia, Cambria, "Times New Roman", Times, serif;
+$lucida-grande: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+$verdana:       Verdana, Geneva, sans-serif;
+$monospace:     Menlo, Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Consolas, Courier, monospace;
+
+
+// 基本フォント
+// -------------------------------------------------------------------------------------------------------
+$baseFontFamily: $sansSerifJa;
+
+
+// 基本フォントサイズ
+// -------------------------------------------------------------------------------------------------------
+$baseFontSize: 16px;
+$smpFontSize:  14px;
+
+
+// デザイン（ＰＳＤ）上の行の高さ
+// -------------------------------------------------------------------------------------------------------
+$designedLineHeight: 24px;
+
+
+// 実際の行の高さ
+// -------------------------------------------------------------------------------------------------------
+$baseLineHeight: $designedLineHeight / $baseFontSize;
+$baseLineHeight: round($baseLineHeight * 10) / 10; // 小数点第二位で四捨五入

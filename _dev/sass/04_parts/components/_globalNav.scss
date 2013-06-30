@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+// コンポーネント｜グローバルナビゲーション
+// -------------------------------------------------------------------------------------------------------
+#globalNavWrap {
+    background-color: #dedede;
+    box-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+
+#globalNav {
+    margin: 0 auto 30px;
+    width: $pageMaxWidth;
+    > ul {
+        @extend %clearfix;
+        > li {
+            float: left;
+            width: $pageMaxWidth / 6;
+            > a {
+                display: block;
+                padding: 10px 0;
+                text-align: center;
+                color: #333;
+                text-decoration: none;
+                font-weight: bold;
+                background-color: #dedede;
+                &:hover {
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+
+    // スマートフォン表示
+    @include below($breakSmall) {
+        margin: 0;
+        width: auto;
+        > ul {
+            > li {
+                float: none;
+                width: auto;
+                border-top: 1px solid #bbb;
+            }
+        }
+    }
+}
+
+
+// コンポーネント｜グローバルナビゲーション｜ドロップダウンメニュー
+// -------------------------------------------------------------------------------------------------------
+
+#dropdown {
+    @extend #globalNav;
+    > ul {
+        li {
+            position: relative;
+            > ul {
+                display: none;
+                position: absolute;
+                z-index: 1000;
+                left: 0;
+                background-color: #fff;
+                width: 100%;
+                border: 1px solid #eee;
+                border-bottom: 0;
+                @include box-sizing(border-box);
+                > li {
+                    border-bottom: 1px solid #eee;
+                    > a {
+                        display: block;
+                        padding: 6px 10px;
+                        text-align: left;
+                        color: $baseFontColor;
+                        &:hover {
+                            background-color: #eee;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

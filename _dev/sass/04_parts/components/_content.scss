@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+// コンポーネント｜フッター
+// -------------------------------------------------------------------------------------------------------
+#content {
+    margin: 0 auto;
+    padding: 20px 15px;
+    width: $pageMaxWidth;
+    @extend %clearfix;
+    @include below($breakSmall) {
+        margin: 0;
+        width: auto;
+    }
+}

@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+// コンポーネント｜ヘッダー
+// -------------------------------------------------------------------------------------------------------
+#headerWrap {
+    background-color: #222;
+}
+
+#header {
+    margin: 0 auto;
+    padding: 10px 0 30px;
+    width: $pageMaxWidth;
+    #logo {
+        font-size: fz(40, $baseFontSize);
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    // スマートフォン表示
+    @include below($breakSmall) {
+        margin: 0;
+        padding: 10px 15px;
+        width: auto;
+        #logo {
+            font-size: fz(24, $baseFontSize);
+        }
+    }
+}

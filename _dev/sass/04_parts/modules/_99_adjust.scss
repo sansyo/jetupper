@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+// モジュール｜調整クラス
+// -------------------------------------------------------------------------------------------------------
+
+/* 上マージン共通化
+------------------------------------------------------------ */
+%mt {
+    margin-top: 1.8em;
+}
+
+
+/* 調整クラス
+------------------------------------------------------------ */
+// マージン調整
+// ------------------------------------------------------------
+@for $i from 0 through 10 {
+    $num : $i*5;
+    @if $i == 0 {
+        .mt#{$num} { margin-top:0 !important; }
+        .mb#{$num} { margin-bottom:0 !important; }
+        .pt#{$num} { padding-top:0 !important; }
+        .pb#{$num} { padding-bottom:0 !important; }
+        .mv#{$num} { @extend .mt#{$num}; @extend .mb#{$num}; } // 上下方向のマージン
+        .pv#{$num} { @extend .pt#{$num}; @extend .pb#{$num}; } // 上下方向のパディング
+    } @else {
+        .mt#{$num} { margin-top:5px*$i !important; }
+        .mb#{$num} { margin-bottom:5px*$i !important; }
+        .pt#{$num} { padding-top:5px*$i !important; }
+        .pb#{$num} { padding-bottom:5px*$i !important; }
+        .mv#{$num} { @extend .mt#{$num}; @extend .mb#{$num}; } // 上下方向のマージン
+        .pv#{$num} { @extend .pt#{$num}; @extend .pb#{$num}; } // 上下方向のパディング
+    }
+}
+
+// テキスト位置調整（水平）
+// ------------------------------------------------------------
+@each $position in left, center, right {
+    .a#{$position} { text-align:$position !important; }
+}
+
+// テキスト位置調整（垂直）
+// ------------------------------------------------------------
+@each $position in top, middle, bottom {
+    .v#{$position} { vertical-align:$position !important; }
+}

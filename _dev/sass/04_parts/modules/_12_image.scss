@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+// モジュール｜画像
+// -------------------------------------------------------------------------------------------------------
+
+/* 画像・テキスト横並び
+------------------------------------------------------------ */
+div.imgLayout {
+    $gutter: 20px;
+    @extend %clearfix;
+    @extend %mt;
+    > div.image  {
+        @include box-sizing(border-box);
+        > p {
+            margin: 0;
+        }
+    }
+    &.left {
+        > div.image {
+            float: left;
+            margin: 0 $gutter 15px 0;
+        }
+    }
+    &.right {
+        > div.image {
+            float: right;
+            margin: 0 0 15px $gutter;
+        }
+    }
+    &.parallel {
+        display: table;
+        width: 100%;
+        > div.image {
+            display: table-cell;
+            float: none;
+            margin: 0;
+            width: 1%;
+            vertical-align: top;
+        }
+        > div.text {
+            display: table-cell;
+            width: 100%;
+            vertical-align: top;
+        }
+        &.left {
+            direction: rtl;
+            > div.image {
+                padding-right: $gutter;
+            }
+            > div.text {
+                direction: ltr;
+            }
+        }
+        &.right {
+            > div.image {
+                padding-left: $gutter;
+            }
+        }
+        @include below($breakSmall) {
+            display: block;
+            width: auto;
+            direction: ltr;
+            &.left, &.right {
+                > div.image, > div.text {
+                    display: block;
+                    width: auto;
+                    direction: ltr;
+                }
+                > div.image {
+                    padding: 0;
+                    p {
+                        margin-bottom: 1.5em;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// 中コメント
+// -------------------------------------------------------------------------------------------------------
