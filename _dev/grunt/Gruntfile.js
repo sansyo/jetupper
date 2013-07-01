@@ -91,7 +91,7 @@ module.exports = function(grunt) {
                     '<%= path.root %><%= path.sourceDir %>/**/*.md',
                     '<%= path.root %><%= path.sourceDir %>/**/*.html'
                 ],
-                tasks: ['jekyll:build']
+                tasks: ['exec:build']
             }
         },
 
