@@ -15,9 +15,9 @@ module.exports = function(grunt) {
     // パスの設定
     var pathConfig = {
         // テンプレート表示ローカルサーバー
-        devVH: 'hyde-dev',
+        devVH: 'jetupper-dev',
         // 表示テストサーバー
-        distVH: 'hyde',
+        distVH: 'jetupper',
         // 本番サーバー
         url: '',
         // ルート位置
